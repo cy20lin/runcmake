@@ -1,0 +1,69 @@
+#+TITLE: runcmake -- An improved CMake script launcher
+#+STARTUP: showall
+#+AUTHOR: ChienYu Lin
+#+EMAIL: cy20lin@google.com
+
+* Introduction
+
+  =runcmake= provides a simpler argument passing interface for =cmake=.
+
+  When it comes to passing arguments into a cmake script, it is quite frustrating
+  that =cmake= itself doesn't provide an easy way to pass arguments like what
+  other language interpreters do. Instead, these arguments could only be pass into
+  that cmake script through =-D= option. It is not intuitive, and thus =runcmake=
+  was born in order to solve this problem.
+
+  Before, with =cmake=, arguments may be passed into a cmake script like this:
+
+  #+BEGIN_SRC sh
+    cmake -DARGC=2 -DARGV0=arg0 -DARGV1=arg1 -DARGV=arg0;arg1 -P /a/cmake/script.cmake
+  #+END_SRC
+
+  Now, with =runcmake=, passing arguments becomes much simpler.
+
+  #+BEGIN_SRC sh
+    runcmake a-cmake-script.cmake arg0 arg1 arg2
+  #+END_SRC
+
+  By the way, accessing these input arguments in cmake script is just as intuitive as 
+  accessing those arguments in a cmake function. Following variables are defined to
+  store the data about input arguments.
+
+  + ARGC    :: the count of input arguments, which is a non-negative integer
+  + ARGV    :: the list of input arguments, each argument is separated by semicolon ';'
+  + ARGV<i> :: the =<i>th= argument, where =<i>= is inside the range =[0,ARGC)=
+  + ARGN    :: same as =ARGV=
+
+  For example, let's use =runcmake= to invoke =a-cmake-script.cmake= (defined as following)
+  with =3= input arguments: =arg0=, =arg1=, =arg2=. 
+
+#+BEGIN_SRC cmake
+    #!/bin/env runcmake
+    message("Hello world. Hello 'runcmake'")
+    message("Let's show some input arguments")
+    message("${ARGC}")   # => "3"
+    message("${ARGV0}")  # => "arg0"
+    message("${ARGV1}")  # => "arg1"
+    message("${ARGV2}")  # => "arg2"
+    message("${ARGV}")   # => "arg0;arg1;arg2"
+    message("${ARGN}")   # => "arg0;arg1;arg2"
+  #+END_SRC
+
+* Setup
+
+** download
+
+  #+BEGIN_SRC sh
+    git clone https://github.com/cy20lin/runcmake
+  #+END_SRC
+
+** installation
+   
+  #+BEGIN_SRC sh
+    ./runcmake/install.sh /your/install/prefix
+  #+END_SRC
+
+* License
+
+  =runcmake= is licensed under [[https://opensource.org/licenses/MIT][the MIT License]].
+
