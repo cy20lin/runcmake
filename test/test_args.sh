@@ -77,11 +77,11 @@ test_all_args() {
     if test "${success_count}" -eq "${args_count}" 
     then
         result=$?
-        echo "All test passed."
+        echo "All tests passed."
         return 0
     else
         result=$?
-        echo "Some test failed."
+        echo "Some tests failed."
     fi
     return ${result}
 }

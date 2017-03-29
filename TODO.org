@@ -7,4 +7,8 @@
 + Implement a POSIX compatible =runcmake.sh=,
   in replacement of the =gawk-runcmake.sh= implementation.
 + Continuous integration.
-
++ Lifting the limitation that single-qoute is not accepted
+  inside input arguments in script =gawk-runcmake.sh=.
++ Add tests to test for special character input.
++ Add documentation about =CMAKE_ARGC=, =CMAKE_ARGV<i>=.
++ Move items in =TODO.org= into issue tracking system.
